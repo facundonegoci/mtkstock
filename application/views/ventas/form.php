@@ -118,8 +118,8 @@
 	var table_items;
 	var indice = 0;
 	var cantidad_items = 0;
-	
 	var miIndice = 0;
+	var PUEDE_GRABAR_ITEM = false;
 	
 	function get_all_products() {
 
@@ -191,8 +191,11 @@
         }
         if(!encontro){
         	alert("El codigo del producto no se han encontrado.");
-        	//reset_form_items();
-        }
+        	PUEDE_GRABAR_ITEM = false;
+			return false;
+        }else{
+			PUEDE_GRABAR_ITEM = true;
+		}
     }
     function set_monto_item() {
 
@@ -262,49 +265,52 @@
     }
     function save_item(){
 
-    	var cantidad = parseInt($("#cantidad").val());
-    	var codigo = $("#codigo").val();
-    	var precio_unitario = $("#precio_unitario").val();
-    	var precio_total = $("#precio_total").val();
-    	var nombre = $("#nombre").val();
-    	var idproducto = $("#idproducto").val();
-		var unidad_venta = $("#unidad_venta").val();
-		var cantidad_por_venta = $("#cantidad_por_venta").val();
-    	
-    	var del = '<a class="btn btn-sm btn-danger" href="javascript:void()" title="Eliminar" onclick="delete_item('+indice+')" style="padding:0px;">Eliminar</a>';
-    	var update = '<input type="number" value="'+cantidad+'" onchange="actualizar_cantidad_item('+codigo+',this.value,'+indice+')" style="text-align: right; width: 80px;font-weight: bold;">';
-    	
-    	if(codigo ==''){ alert("Ingrese el codigo"); return false;}
-    	if(cantidad ==''){ alert("Ingrese la cantidad"); return false;}
-    	if(cantidad<=0){ alert("Ingrese correctamente la cantidad"); return false;}
-    	
-    	var item = [codigo, nombre, precio_unitario, cantidad, precio_total,update, del, idproducto, indice, unidad_venta, cantidad_por_venta];
-    	
-    	items.push(item);
-    	
-    	set_monto_total();
-    	
-    	if(typeof table_items === 'object'){
-    		table_items.destroy();
-			generate_table_items();
-		}
-		//$('#form_stock_items')[0].reset(); // reset form on modals
-		
-		$("#codigo").focus();
+		if (PUEDE_GRABAR_ITEM) {    
 	
-		$("#codigo").val("");
-
-		$("#nombre").val("");
-
-		$("#precio_initario").val(0.00);
-
-		$("#precio_total").val(0.00);
-
-		 $("#idproducto").val("");
+			var cantidad = parseInt($("#cantidad").val());
+			var codigo = $("#codigo").val();
+			var precio_unitario = $("#precio_unitario").val();
+			var precio_total = $("#precio_total").val();
+			var nombre = $("#nombre").val();
+			var idproducto = $("#idproducto").val();
+			var unidad_venta = $("#unidad_venta").val();
+			var cantidad_por_venta = $("#cantidad_por_venta").val();
+			
+			var del = '<a class="btn btn-sm btn-danger" href="javascript:void()" title="Eliminar" onclick="delete_item('+indice+')" style="padding:0px;">Eliminar</a>';
+			var update = '<input type="number" value="'+cantidad+'" onchange="actualizar_cantidad_item('+codigo+',this.value,'+indice+')" style="text-align: right; width: 80px;font-weight: bold;">';
+			
+			if(codigo ==''){ alert("Ingrese el codigo"); return false;}
+			if(cantidad ==''){ alert("Ingrese la cantidad"); return false;}
+			if(cantidad<=0){ alert("Ingrese correctamente la cantidad"); return false;}
+			
+			var item = [codigo, nombre, precio_unitario, cantidad, precio_total,update, del, idproducto, indice, unidad_venta, cantidad_por_venta];
+			
+			items.push(item);
+			
+			set_monto_total();
+			
+			if(typeof table_items === 'object'){
+				table_items.destroy();
+				generate_table_items();
+			}
+			//$('#form_stock_items')[0].reset(); // reset form on modals
+			
+			$("#codigo").focus();
 		
-		cantidad_items++;
-		
-		indice++;
+			$("#codigo").val("");
+	
+			$("#nombre").val("");
+	
+			$("#precio_initario").val(0.00);
+	
+			$("#precio_total").val(0.00);
+	
+			 $("#idproducto").val("");
+			
+			cantidad_items++;
+			
+			indice++;
+		}
     }
     function delete_item(i){
     	

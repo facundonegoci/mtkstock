@@ -64,7 +64,8 @@
 	        $('#form')[0].reset(); // reset form on modals
 	        $('#modal_form').modal('show'); // show bootstrap modal
 	        $('.modal-title').text('Agregar'); // Set Title to Bootstrap modal title
-	        $( "#codigo" ).focus();
+	       
+			setTimeout(function() {  $( "#codigo" ).focus(); }, 1000);
 	    }
 	    /*EDITAR PRODUCTO*/
 	    function edit_obj(id)
@@ -82,7 +83,6 @@
 	            dataType: "JSON",
 	            success: function (data)
 	            {
-	
 	                $('[name="id"]').val(data.id);
 	                $('[name="codigo"]').val(data.codigo);
 	                $('[name="nombre"]').val(data.nombre);
@@ -96,13 +96,11 @@
 	                $('[name="proveedores_id"]').val(data.proveedores_id);
 	                $('[name="categorias_productos_id"]').val(data.categorias_productos_id);
 	                $('[name="lugar_venta"]').val(data.lugar_venta);
-					
 					$('[name="unidad_venta"]').val(data.unidad_venta);
 					$('[name="cantidad_por_venta"]').val(data.cantidad_por_venta);
-					
-	
 	                $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
 	                $('.modal-title').text('Editar'); // Set title to Bootstrap modal title
+					setTimeout(function() {  $( "#codigo" ).focus(); }, 1000);
 	
 	            },
 	            error: function (jqXHR, textStatus, errorThrown)
